@@ -1,3 +1,4 @@
+import 'package:basic/modules/home/widget/drawer_list.dart';
 import 'package:basic/modules/page1/page1.dart';
 import 'package:basic/modules/page2/hello_page_2.dart';
 import 'package:basic/modules/page3/hello_page_3.dart';
@@ -13,17 +14,35 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Hello Flutter',
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'Hello Flutter',
+          ),
+          bottom: TabBar(
+            tabs: [
+              Tab(
+                text: "Body 1",
+              ),
+              Tab(
+                text: "Body 2",
+              ),
+            ],
+          ),
         ),
-        centerTitle: true,
-      ),
-      body: _body(context),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => print("floating"),
-        child: Icon(Icons.add),
+        body: TabBarView(
+          children: [
+            _body(context),
+            _buttons(),
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => print("floating"),
+          child: Icon(Icons.add),
+        ),
+        drawer: DrawerList(),
       ),
     );
   }
