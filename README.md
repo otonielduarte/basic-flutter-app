@@ -1,6 +1,6 @@
 # basic-flutter-app
 
-A new Flutter project.
+A new Flutter project. Used by study.
 
 ## Getting Started
 
