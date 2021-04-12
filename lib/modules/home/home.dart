@@ -1,10 +1,12 @@
-import 'package:basic/modules/page1/hello_page_1.dart';
+import 'package:basic/modules/page1/page1.dart';
 import 'package:basic/modules/page2/hello_page_2.dart';
 import 'package:basic/modules/page3/hello_page_3.dart';
 import 'package:basic/shared/util/push.dart';
 import 'package:basic/shared/widgets/button/button.dart';
+import 'package:basic/shared/widgets/image/image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Home extends StatelessWidget {
   const Home({key}) : super(key: key);
@@ -19,49 +21,52 @@ class Home extends StatelessWidget {
         centerTitle: true,
       ),
       body: _body(context),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => print("floating"),
+        child: Icon(Icons.add),
+      ),
     );
   }
 
   _body(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        color: Colors.white,
+    return Container(
+      height: MediaQuery.of(context).size.height,
+      child: SingleChildScrollView(
         child: _column(context),
       ),
     );
   }
 
-  _buttons(BuildContext context) {
-    return Column(
-      children: [
-        _row1(context),
-        _row2(context),
-      ],
-    );
+  _buttons() {
+    return Builder(builder: (BuildContext context) {
+      return Column(
+        children: [
+          _row1(context),
+          _row2(context),
+        ],
+      );
+    });
   }
 
   Column _column(BuildContext context) {
     return Column(
       children: <Widget>[
-        _text(),
+        /* _text(),
         _pageView(),
-        _buttons(context),
-        _container(context)
+        _buttons(context), */
+        _container(context),
       ],
     );
   }
 
   Container _container(context) {
     return Container(
-      padding: EdgeInsets.all(16),
-      margin: EdgeInsets.only(top: 20),
-      color: Colors.yellow,
+      padding: EdgeInsets.only(top: 16),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           _text(),
           _pageView(),
-          _buttons(context),
+          _buttons(),
         ],
       ),
     );
@@ -71,7 +76,7 @@ class Home extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-        CustomButtom("ListView", () => push(context, HelloPage1())),
+        CustomButtom("ListView", () => push(context, Page1())),
         CustomButtom("Page 2", () => push(context, HelloPage2())),
         CustomButtom("Page 3", () => push(context, HelloPage3()))
       ],
@@ -83,8 +88,8 @@ class Home extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        CustomButtom("Snack", _onClickSnack),
-        CustomButtom("Dialog", _onClickDialog),
+        CustomButtom("Snack", () => _onClickSnack(context)),
+        CustomButtom("Dialog", () => _onClickDialog(context)),
         CustomButtom("Toast", _onClickToast)
       ],
     );
@@ -93,27 +98,17 @@ class Home extends StatelessWidget {
   _pageView() {
     return Container(
       height: 300,
-      margin: EdgeInsets.all(20),
+      margin: EdgeInsets.only(left: 8, right: 8),
       child: PageView(
         children: [
-          _image("dog1.png"),
-          _image("dog2.png"),
-          _image("dog3.png"),
-          _image("dog4.png"),
-          _image("dog5.png"),
+          CustomImage("dog1.png"),
+          CustomImage("dog2.png"),
+          CustomImage("dog3.png"),
+          CustomImage("dog4.png"),
+          CustomImage("dog5.png"),
         ],
       ),
     );
-  }
-
-  _image(String imageName) {
-    return Image.asset(
-      'assets/images/$imageName',
-    );
-    /* return Image.network(
-      "https://uploads-ssl.webflow.com/5cac6236f8d44ddee118d97c/5e666d594f66c9c1e9c3ce74_LogoRGB2.png",
-      semanticLabel: "Imagem logo marca da zup",
-    ); */
   }
 
   Text _text() {
@@ -121,7 +116,7 @@ class Home extends StatelessWidget {
       "Hello word",
       style: TextStyle(
         color: Colors.blue,
-        fontSize: 30,
+        fontSize: 24,
         fontWeight: FontWeight.bold,
         fontStyle: FontStyle.italic,
         decoration: TextDecoration.underline,
@@ -131,15 +126,52 @@ class Home extends StatelessWidget {
     );
   }
 
-  _onClickSnack() {
-    print('snack');
+  _onClickSnack(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(_snackBar());
   }
 
-  _onClickDialog() {
-    print('Dialog');
+  SnackBar _snackBar() {
+    return SnackBar(
+      content: Text("Hello I'm a snackBar"),
+      action: SnackBarAction(
+        label: 'Ok',
+        onPressed: () => print('oi'),
+      ),
+    );
+  }
+
+  _onClickDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext dialigContext) => _alertDialog(context));
+  }
+
+  AlertDialog _alertDialog(BuildContext context) {
+    return AlertDialog(
+      title: Text("I'm learning Flutter, flutter is easy!"),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: Text('Cancel'),
+        ),
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: Text('Ok'),
+        ),
+      ],
+    );
   }
 
   _onClickToast() {
-    print('Toast');
+    Fluttertoast.showToast(
+      msg: "Hi, I'm learning Flutter! I'm arrived to success",
+      toastLength: Toast.LENGTH_LONG,
+      gravity: ToastGravity.CENTER,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Colors.black38,
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
   }
 }
