@@ -1,11 +1,10 @@
-import 'package:basic/modules/home/widget/drawer_list.dart';
-import 'package:basic/modules/page1/page1.dart';
-import 'package:basic/modules/page2/hello_page_2.dart';
-import 'package:basic/modules/page3/hello_page_3.dart';
-import 'package:basic/shared/util/push.dart';
-import 'package:basic/shared/widgets/button/button.dart';
-import 'package:basic/shared/widgets/image/image.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:basic/pages/hello_page_2.dart';
+import 'package:basic/pages/hello_page_3.dart';
+import 'package:basic/pages/page1.dart';
+import 'package:basic/widgets/drawer_list.dart';
+import 'package:basic/util/push.dart';
+import 'package:basic/widgets/widgets/button/button.dart';
+import 'package:basic/widgets/widgets/image/image.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 

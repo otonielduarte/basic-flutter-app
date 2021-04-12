@@ -1,7 +1,7 @@
-import 'package:basic/modules/dog_details/dog_details.dart';
-import 'package:basic/modules/page1/model/dog.dart';
-import 'package:basic/shared/util/push.dart';
-import 'package:basic/shared/widgets/image/image.dart';
+import 'package:basic/models/dog.dart';
+import 'package:basic/pages/dog_details.dart';
+import 'package:basic/util/push.dart';
+import 'package:basic/widgets/widgets/image/image.dart';
 import 'package:flutter/material.dart';
 
 class Page1 extends StatefulWidget {
